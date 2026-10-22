@@ -39,7 +39,7 @@ def eval_postfix(expression: str):
                 val = float(token) if "." in token else int(token)
                 stack.append(val)
             except ValueError:
-                print(f"Неизвестный сиmвол '{token}'!")
+                print(f"Неизвестный символ '{token}'! В терминале выражение нужно передавать в кавычках: python3 main.py \"2 3 ~\"")
                 return None
 
         print(f"Токен: {token:>2} | Стек: {stack}")
@@ -65,4 +65,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
