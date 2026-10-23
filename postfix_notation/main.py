@@ -9,7 +9,7 @@ def eval_postfix(expression: str):
 
     stack = []
     for token in tokens:
-        if token in {"+", "-", "*", "/", "~"}:
+        if token in {"+", "-", "*", "/", "~", "!"}:
             if len(stack) < 2:
                 print(f"Для операции '{token}' не хватает операндов в стеке {stack}!")
                 return None
@@ -29,6 +29,13 @@ def eval_postfix(expression: str):
                     return None
                 res = a / b
                 stack.append(int(res) if res.is_integer() else res)
+            elif token == "!":
+                try:
+                    res = a ** b
+                    stack.append(int(res) if isinstance(res, float) and res.is_integer() else res)
+                except ZeroDivisionError:
+                    print("Возведение нуля в отрицательную степень невозможно(")
+                    return None
             elif token == "~":
                 if a != 0 and b != 0:
                     stack.append(abs(a - b))
@@ -58,6 +65,7 @@ def main():
     else:
         expr = input("Введите постфиксное выражение: ")
 
+    expr = expr.strip("'\"")
     result = eval_postfix(expr)
     if result is not None:
         print(f"{expr} = {result}")
